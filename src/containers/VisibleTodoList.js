@@ -1,7 +1,10 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toggleTodo } from '../actions'
-import TodoList from '../components/TodoList'
 import { VisibilityFilters } from '../actions'
+import Todo from '../components/Todo'
+
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
         case VisibilityFilters.SHOW_ALL:
@@ -14,6 +17,26 @@ const getVisibleTodos = (todos, filter) => {
             throw new Error('Unknown filter: ' + filter)
     }
 }
+
+const TodoList = ({ todos, toggleTodo }) => (
+    <ul>
+        {todos.map(todo => (
+            <Todo key={todo.id} {...todo} onClick={() => toggleTodo(todo.id)} />
+        ))}
+    </ul>
+)
+
+TodoList.propTypes = {
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            completed: PropTypes.bool.isRequired,
+            text: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired,
+    toggleTodo: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
     todos: getVisibleTodos(state.todos, state.visibilityFilter)
 })
