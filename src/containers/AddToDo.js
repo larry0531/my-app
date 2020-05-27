@@ -15,7 +15,7 @@ const AddTodo = ({ dispatch }) => {
                     input.value = ''
                 }}
             >
-                <input ref={node => (input = node)} />
+                <input ref={node => (input = node)} className="add-to-do"/>
                 <button type="submit">Add Todo</button>
             </form>
         </div>
