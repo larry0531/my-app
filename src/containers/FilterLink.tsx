@@ -1,8 +1,12 @@
 import { connect } from 'react-redux'
 import { setVisibilityFilter } from '../actions'
 import React from 'react'
-import PropTypes from 'prop-types'
-const Link = ({ active, children, onClick }) => (
+interface ILink {
+    active: boolean
+    children: () => void
+    onClick: () => void
+}
+const Link: React.FC<ILink> = ({ active, children, onClick }) => (
     <button
         onClick={onClick}
         disabled={active}
@@ -13,11 +17,6 @@ const Link = ({ active, children, onClick }) => (
         {children}
     </button>
 )
-Link.propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-    onClick: PropTypes.func.isRequired
-}
 
 const mapStateToProps = (state, ownProps) => ({
     active: ownProps.filter === state.visibilityFilter
